@@ -39,8 +39,16 @@ jobs:
         run: |
           echo '${{ secrets.GOOGLE_SERVICES_JSON }}' > android/app/google-services.json
 
-      - name: Copy debug keystore for release signing
-        run: cp ~/.android/debug.keystore android/app/debug.keystore
+      - name: Ensure debug keystore exists for release signing
+        run: |
+          if [ ! -f android/app/debug.keystore ]; then
+            keytool -genkey -v \
+              -keystore android/app/debug.keystore \
+              -alias androiddebugkey \
+              -keyalg RSA -keysize 2048 -validity 10000 \
+              -dname "CN=Android Debug, O=Android, C=US" \
+              -storepass android -keypass android -noprompt
+          fi
 
       - name: Make Gradlew executable
         run: chmod +x android/gradlew
