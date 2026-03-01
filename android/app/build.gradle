@@ -112,7 +112,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.mattermost.rnbeta"
+        applicationId "com.mattermost.push.test"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 726
