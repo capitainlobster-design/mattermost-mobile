@@ -27,8 +27,13 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Install dependencies (skip solidarity preinstall check)
+        run: npm ci --ignore-scripts
+
+      - name: Apply patches and run postinstall
+        run: |
+          npx patch-package
+          ./scripts/postinstall.sh
 
       - name: Place google-services.json
         run: |
